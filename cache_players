@@ -1,0 +1,10 @@
+import requests_cache
+from datetime import timedelta
+
+# Install cache with a 24-hour expiration
+requests_cache.install_cache('sleeper_cache', expire_after=timedelta(days=1))
+
+def fetch_nfl_players():
+    url = "https://api.sleeper.app/v1/players/nfl"
+    response = requests.get(url)
+    return response.json()
