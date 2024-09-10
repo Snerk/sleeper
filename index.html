@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleeper API Webapp</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            white-space: pre-wrap;
+            background-color: #f8f8f8;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sleeper API Webapp</h1>
+        
+        <h2>Get User Info</h2>
+        <input type="text" id="username" placeholder="Enter username">
+        <button onclick="getUser()">Get User Info</button>
+        
+        <h2>Get User Leagues</h2>
+        <input type="text" id="userId" placeholder="Enter user ID">
+        <input type="text" id="sport" placeholder="Enter sport (e.g., nfl)">
+        <input type="text" id="season" placeholder="Enter season (e.g., 2023)">
+        <button onclick="getUserLeagues()">Get User Leagues</button>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        async function getUser() {
+            const username = document.getElementById('username').value;
+            const response = await fetch(`/user/${username}`);
+            const data = await response.json();
+            document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+        }
+
+        async function getUserLeagues() {
+            const userId = document.getElementById('userId').value;
+            const sport = document.getElementById('sport').value;
+            const season = document.getElementById('season').value;
+            const response = await fetch(`/user/${userId}/leagues/${sport}/${season}`);
+            const data = await response.json();
+            document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+        }
+    </script>
+</body>
+</html>
